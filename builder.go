@@ -225,14 +225,10 @@ func (k *kResolver) makeAddresses(e Endpoints) ([]resolver.Address, string) {
 		}
 
 		for _, address := range subset.Addresses {
-			sname := k.target.serviceName
-			if address.TargetRef != nil {
-				sname = address.TargetRef.Name
-			}
 			newAddrs = append(newAddrs, resolver.Address{
 				Type:       resolver.Backend,
 				Addr:       net.JoinHostPort(address.IP, port),
-				ServerName: sname,
+				ServerName: "",
 				Attributes: attributes.New(
 					attrEndpointReference{}, address.TargetRef,
 					attrEndpointLabels{}, e.Metadata.Labels,
